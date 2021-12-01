@@ -1,10 +1,13 @@
+from IPython.display import clear_output
+
 row1 = [" ", " ", " "]
-row2 = [" ", "X", " "]
+row2 = [" ", " ", " "]
 row3 = [" ", " ", " "]
 
-turn = "X"
+
 
 def display_board(row1, row2, row3):
+    clear_output()
     print("\nCurrent board state: \n")
     print(f" {row1[0]} | {row1[1]} | {row1[2]} ")
     print("-----------")
@@ -48,7 +51,7 @@ def position_available(choice):
             return True
     return False
 
-def update_board(choice):
+def update_board(choice, turn):
     if choice in [1,2,3]:
         row1[choice-1] = turn
     elif choice in [4,5,6]:
@@ -56,14 +59,74 @@ def update_board(choice):
     else:
         row3[(choice - 1) % 3] = turn
 
-    # Change player's turn
-    if turn == "X":
-        turn = "O"
+
+
+def take_turn(turn):
+    display_board(row1, row2, row3)
+    print(f"It is {turn}'s turn.")
+    move = get_input()
+    update_board(move, turn)
+
+def check_win(row1,row2,row3):
+    if row1[0] != " " and row1[0] == row1[1] and row1[1] == row1[2]:
+        display_board(row1, row2, row3)
+        print(f"{row1[0]} wins!")
+        return True
+    elif row2[0] != " " and row2[0] == row2[1] and row2[1] == row2[2]:
+        display_board(row1, row2, row3)
+        print(f"{row2[0]} wins!")
+        return True
+    elif row3[0] != " " and row3[0] == row3[1] and row3[1] == row3[2]:
+        display_board(row1, row2, row3)
+        print(f"{row3[0]} wins!")
+        return True
+    elif row1[0] != " " and row1[0] == row2[0] and row2[0] == row3[0]:
+        display_board(row1, row2, row3)
+        print(f"{row1[0]} wins!")
+        return True
+    elif row1[1] != " " and row1[1] == row2[1] and row2[1] == row3[1]:
+        display_board(row1, row2, row3)
+        print(f"{row1[1]} wins!")
+        return True
+    elif row1[2] != " " and row1[2] == row2[2] and row2[2] == row3[2]:
+        display_board(row1, row2, row3)
+        print(f"{row1[2]} wins!")
+        return True
+    elif row1[0] != " " and row1[0] == row2[1] and row2[1] == row3[2]:
+        display_board(row1, row2, row3)
+        print(f"{row1[0]} wins!")
+        return True
+    elif row1[2] != " " and row1[2] == row2[1] and row2[1] == row3[0]:
+        display_board(row1, row2, row3)
+        print(f"{row3[0]} wins!")
+        return True
     else:
-        turn = "X"
+        return False
 
+def check_tie(row1,row2,row3):
+    for space in row1:
+        if space == " ":
+            return False
+    for space in row2:
+        if space == " ":
+            return False
+    for space in row3:
+        if space == " ":
+            return False
+    display_board(row1,row2,row3)
+    print("Tied game!")
+    return True
 
+def play_game():
+    turn = "X"
+    while not (check_win(row1,row2,row3) or check_tie(row1,row2,row3)):
+        take_turn(turn)
+        if turn == "X":
+            turn = "O"
+        else:
+            turn = "X"
 
+play_game()
 
 # display_board(row1,row2,row3)
 # get_input()
