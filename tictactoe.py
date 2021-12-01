@@ -117,6 +117,14 @@ def check_tie(row1,row2,row3):
     print("Tied game!")
     return True
 
+def play_again():
+    r = input("\nPlay again? [Y/N]").lower()
+    if r == 'y':
+        play_game()
+    else:
+        print("Bye, Felicia!")
+
+
 def play_game():
     turn = "X"
     while not (check_win(row1,row2,row3) or check_tie(row1,row2,row3)):
@@ -125,6 +133,7 @@ def play_game():
             turn = "O"
         else:
             turn = "X"
+    play_again()
 
 play_game()
 
