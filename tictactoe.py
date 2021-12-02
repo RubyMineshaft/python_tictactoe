@@ -1,8 +1,35 @@
 from IPython.display import clear_output
+import random
 
 row1 = [" ", " ", " "]
 row2 = [" ", " ", " "]
 row3 = [" ", " ", " "]
+
+player1 = {"name": "", "mark": "X", "wins": 0}
+player2 = {"name": "", "mark": "O", "wins": 0}
+
+def get_names():
+    res = input("Player 1 (X), please enter your name: ")
+    player1["name"] = res
+    res = input("Player 2 (O), please enter your name: ")
+    player2["name"] = res
+
+def up_first():
+    coin = random.randint(1,2)
+    if coin == 1:
+        return player1
+    else:
+        return player2
+
+def setup():
+    print("Welcome to Python TicTacToe!")
+    get_names()
+    play_game()
+    if play_again():
+        clear_board()
+        play_game()
+    else:
+        print("Bye, Felicia!")
 
 
 
@@ -61,44 +88,102 @@ def update_board(choice, turn):
 
 
 
-def take_turn(turn):
+def take_turn(player):
     display_board(row1, row2, row3)
-    print(f"It is {turn}'s turn.")
+    name = player["name"]
+    print(f"It is {name}'s turn.")
     move = get_input()
-    update_board(move, turn)
+    update_board(move, player["mark"])
 
 def check_win(row1,row2,row3):
     if row1[0] != " " and row1[0] == row1[1] and row1[1] == row1[2]:
         display_board(row1, row2, row3)
-        print(f"{row1[0]} wins!")
+        if row1[0] == "X":
+            name = player1["name"]
+            player1["wins"] += 1
+        else:
+            name = player2["name"]
+            player2["wins"] += 1
+        print(f"{name} wins!")
+        print(f"{player1['name']} - {player1['wins']}  |  {player2['name']} - {player2['wins']}")
         return True
     elif row2[0] != " " and row2[0] == row2[1] and row2[1] == row2[2]:
         display_board(row1, row2, row3)
-        print(f"{row2[0]} wins!")
+        if row2[0] == "X":
+            name = player1["name"]
+            player1["wins"] += 1
+        else:
+            name = player2["name"]
+            player2["wins"] += 1
+        print(f"{name} wins!")
+        print(f"{player1['name']} - {player1['wins']}  |  {player2['name']} - {player2['wins']}")
         return True
     elif row3[0] != " " and row3[0] == row3[1] and row3[1] == row3[2]:
         display_board(row1, row2, row3)
-        print(f"{row3[0]} wins!")
+        if row3[0] == "X":
+            name = player1["name"]
+            player1["wins"] += 1
+        else:
+            name = player2["name"]
+            player2["wins"] += 1
+        print(f"{name} wins!")
+        print(f"{player1['name']} - {player1['wins']}  |  {player2['name']} - {player2['wins']}")
         return True
     elif row1[0] != " " and row1[0] == row2[0] and row2[0] == row3[0]:
         display_board(row1, row2, row3)
-        print(f"{row1[0]} wins!")
+        if row1[0] == "X":
+            name = player1["name"]
+            player1["wins"] += 1
+        else:
+            name = player2["name"]
+            player2["wins"] += 1
+        print(f"{name} wins!")
+        print(f"{player1['name']} - {player1['wins']}  |  {player2['name']} - {player2['wins']}")
         return True
     elif row1[1] != " " and row1[1] == row2[1] and row2[1] == row3[1]:
         display_board(row1, row2, row3)
-        print(f"{row1[1]} wins!")
+        if row1[1] == "X":
+            name = player1["name"]
+            player1["wins"] += 1
+        else:
+            name = player2["name"]
+            player2["wins"] += 1
+        print(f"{name} wins!")
+        print(f"{player1['name']} - {player1['wins']}  |  {player2['name']} - {player2['wins']}")
         return True
     elif row1[2] != " " and row1[2] == row2[2] and row2[2] == row3[2]:
         display_board(row1, row2, row3)
-        print(f"{row1[2]} wins!")
+        if row1[2] == "X":
+            name = player1["name"]
+            player1["wins"] += 1
+        else:
+            name = player2["name"]
+            player2["wins"] += 1
+        print(f"{name} wins!")
+        print(f"{player1['name']} - {player1['wins']}  |  {player2['name']} - {player2['wins']}")
         return True
     elif row1[0] != " " and row1[0] == row2[1] and row2[1] == row3[2]:
         display_board(row1, row2, row3)
-        print(f"{row1[0]} wins!")
+        if row1[0] == "X":
+            name = player1["name"]
+            player1["wins"] += 1
+        else:
+            name = player2["name"]
+            player2["wins"] += 1
+        print(f"{name} wins!")
+        print(f"{player1['name']} - {player1['wins']}  |  {player2['name']} - {player2['wins']}")
         return True
     elif row1[2] != " " and row1[2] == row2[1] and row2[1] == row3[0]:
         display_board(row1, row2, row3)
-        print(f"{row3[0]} wins!")
+        if row3[0] == "X":
+            name = player1["name"]
+            player1["wins"] += 1
+        else:
+            name = player2["name"]
+            player2["wins"] += 1
+        print(f"{name} wins!")
+        print(f"{player1['name']} - {player1['wins']}  |  {player2['name']} - {player2['wins']}")
+
         return True
     else:
         return False
@@ -120,22 +205,26 @@ def check_tie(row1,row2,row3):
 def play_again():
     r = input("\nPlay again? [Y/N]").lower()
     if r == 'y':
-        play_game()
+        return True
     else:
-        print("Bye, Felicia!")
+        return False
+
+def clear_board():
+    row1 = [" ", " ", " "]
+    row2 = [" ", " ", " "]
+    row3 = [" ", " ", " "]
 
 
 def play_game():
-    turn = "X"
+    turn = up_first()
     while not (check_win(row1,row2,row3) or check_tie(row1,row2,row3)):
         take_turn(turn)
-        if turn == "X":
-            turn = "O"
+        if turn == player1:
+            turn = player2
         else:
-            turn = "X"
-    play_again()
+            turn = player1
 
-play_game()
+setup()
 
 # display_board(row1,row2,row3)
 # get_input()
